@@ -1,0 +1,24 @@
+
+services:
+  web:
+    build: .
+    container_name: webapp
+    networks:
+      - appnetwork
+    ports:
+      - "5002:5000"
+
+  nginx:
+    image: nginx
+    container_name: nginx-compose
+    networks:
+      - appnetwork
+    ports:
+    volumes:
+      - ./nginx-proxy/nginx-compose.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - web
+
+networks:
+  appnetwork:
+    driver: bridge
