@@ -1,70 +1,37 @@
-# Simple Web Application
+# Docker Training Tasks — P Bharath
 
-A minimal [Python Flask](https://flask.palletsprojects.com/) web application used as the demo app in the [KodeKloud Docker for Beginners](https://kodekloud.com/courses/docker-for-the-absolute-beginner-hands-on/) course.
+Submission for Docker training tasks 1–13, completed on AWS EC2 (Ubuntu).
 
-The app exposes two routes:
+## Tasks Overview
 
-| Route | Response |
-|---|---|
-| `/` | `Welcome!` |
-| `/how-are-you` | `I am good, how about you?` |
+| Task | Description | Notes |
+|------|-------------|-------|
+| 1-4 | Linux setup, clone app, Dockerfile, build & run image | See commit history |
+| 5 | Run Container | task5-notes.md |
+| 6 | Docker Logs | task6-notes.md |
+| 7 | Docker Network | task7-notes.md |
+| 8 | Nginx Reverse Proxy | task8-notes.md |
+| 9 | Docker Compose | task9-notes.md |
+| 10 | Add MySQL | task10-notes.md |
+| 11 | Docker Volume | task11-notes.md |
+| 12 | Troubleshooting Challenge | task12-notes.md |
+| 13 | Git Submission | This file |
 
-## Run manually (without Docker)
+## App
 
-These steps assume a fresh machine.
+A minimal Flask web app (from mmumshad/simple-webapp-flask), containerized with Docker,
+served via Nginx reverse proxy, and backed by MySQL — all orchestrated with Docker Compose.
 
-1. Select an OS - Ubuntu
+## How to Run
 
-2. Update the package index:
+docker-compose up -d
 
-   ```bash
-   sudo apt-get update
-   ```
+- Flask app: http://localhost:5002
+- Via Nginx proxy: http://localhost:8082
+- MySQL: localhost:3306
 
-3. Install Flask (this also pulls in Python 3):
+## Environment
 
-   ```bash
-   sudo apt-get install -y python3-flask
-   ```
-
-4. Set the Flask app environment variable:
-
-   ```bash
-   export FLASK_APP=app.py
-   ```
-
-5. Start the application:
-
-   ```bash
-   flask run --host=0.0.0.0
-   ```
-
-Then open `http://localhost:5000` and `http://localhost:5000/how-are-you` in a browser.
-
-## Run with Docker
-
-```bash
-git clone https://github.com/mmumshad/simple-webapp-flask.git
-cd simple-webapp-flask
-docker build -t simple-webapp-flask .
-docker run -p 5000:5000 simple-webapp-flask
-```
-
-Then open `http://localhost:5000` and `http://localhost:5000/how-are-you` in a browser.
-
-## The Dockerfile
-
-```dockerfile
-FROM ubuntu
-
-RUN apt-get update
-RUN apt-get install -y python3-flask
-
-COPY app.py /opt/app.py
-
-ENV FLASK_APP=/opt/app.py
-
-ENTRYPOINT ["flask", "run", "--host=0.0.0.0"]
-```
-
-Each instruction mirrors one of the manual steps above — making it easy to see how a Dockerfile is just an automated install script.
+- AWS EC2 (Ubuntu 24.04)
+- Docker 29.1.3
+- Docker Compose (standalone binary)
